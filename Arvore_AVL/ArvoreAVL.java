@@ -1,6 +1,6 @@
 package Arvore_AVL;
 
-public class AVLTree {
+public class ArvoreAVL {
 
     class Node {
         int key, height;
@@ -22,15 +22,13 @@ public class AVLTree {
     }
 
     // Calcula Fator de Balanceamento: FB = alt(esq) - alt(dir)
-   // Conforme Slide 04 da Aula 10 
+   // Conforme Aula 10 
     private int getBalance(Node N) {
         if (N == null) return 0;
         return height(N.left) - height(N.right);
     }
 
-    // ==ROTAÇÕES== (Conforme slides Aula 10)
-
-    // Rotação à Direita (Slide 08)
+    // Rotação à Direita 
     private Node rightRotate(Node y) {
         Node x = y.left;
         Node T2 = x.right;
@@ -47,7 +45,7 @@ public class AVLTree {
         return x;
     }
 
-    // Rotação à Esquerda (Slide 12)
+    // Rotação à Esquerda 
     private Node leftRotate(Node x) {
         Node y = x.right;
         Node T2 = y.left;
@@ -64,13 +62,13 @@ public class AVLTree {
         return y;
     }
 
-    // === INSERÇÃO ===
+    // INSERÇÃO
     public void insert(int key) {
         root = insert(root, key);
     }
 
     private Node insert(Node node, int key) {
-        // 1. Inserção normal de BST
+     
         if (node == null) return (new Node(key));
 
         if (key < node.key)
@@ -78,15 +76,15 @@ public class AVLTree {
         else if (key > node.key)
             node.right = insert(node.right, key);
         else
-            return node; // Chaves duplicadas não permitidas
+            return node; 
 
-        // 2. Atualiza altura do ancestral
+        //  Atualiza altura do ancestral
         node.height = 1 + Math.max(height(node.left), height(node.right));
 
-        // 3. Obtém o fator de balanceamento para verificar se desbalanceou
+        //  Obtém o fator de balanceamento para verificar se desbalanceou
         int balance = getBalance(node);
 
-        // Se desbalanceou, tem 4 casos (Slides 13 a 16 da Aula 10) 
+        // Se desbalanceou, tem 4 casos 
 
         // Caso Esquerda-Esquerda (Rotação Simples Direita)
         if (balance > 1 && key < node.left.key)
@@ -111,7 +109,7 @@ public class AVLTree {
         return node;
     }
     
-    // === BUSCA ===
+    // BUSCA
     public boolean search(int key) {
         Node current = root;
         while (current != null) {
@@ -121,13 +119,12 @@ public class AVLTree {
         return false;
     }
     
-     // === REMOÇÃO === (Simplificada para manter a estrutura, mas o AVL exige rebalanceamento na remoção também)
+     //  REMOÇÃO 
     public void remove(int key) {
         root = deleteNode(root, key);
     }
 
     private Node deleteNode(Node root, int key) {
-        // 1. Deleção padrão BST
         if (root == null) return root;
 
         if (key < root.key) root.left = deleteNode(root.left, key);
@@ -151,10 +148,10 @@ public class AVLTree {
 
         if (root == null) return root;
 
-        // 2. Atualiza altura
+        //  Atualiza altura
         root.height = Math.max(height(root.left), height(root.right)) + 1;
 
-        // 3. Balanceamento (Idêntico à inserção)
+        // Balanceamento 
         int balance = getBalance(root);
 
         if (balance > 1 && getBalance(root.left) >= 0)

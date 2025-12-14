@@ -1,17 +1,17 @@
 package TabelaHash;
 
-public class HashChaining {
+public class TabelaHashEncadeamento {
 
-    private final LinkedList[] table;
+    private final ListaEncadeada[] table;
     private final int size;
     public int collisions = 0;
 
-    public HashChaining(int size) {
+    public TabelaHashEncadeamento(int size) {
         this.size = size;
-        this.table = new LinkedList[size];
+        this.table = new ListaEncadeada[size];
 
         for (int i = 0; i < size; i++) {
-            table[i] = new LinkedList();
+            table[i] = new ListaEncadeada();
         }
     }
 

@@ -1,74 +1,68 @@
 import java.util.Random;
-
-// Imports ajustados para suas pastas
-import TabelaHash.HashChaining;
-import TabelaHash.HashOpenAddressing;
-import Arvore_AVL.AVLTree;
-import Arvore_binaria.BinarySearchTree;
+import TabelaHash.TabelaHashEncadeamento;
+import TabelaHash.TabelaHashEnderecamentoAberto;
+import Arvore_AVL.ArvoreAVL;
+import Arvore_binaria.ArvoreBinariaBusca;
 
 public class Main {
     public static void main(String[] args) {
 
        
-        // CONFIGURAÇÃO GERAL
-    
+       
         int N = 100000; // Carga de trabalho padrão (Hash e AVL aguentam bem)
-        int size = 200003; // Tamanho da tabela hash (primo)
+        int size = 200000; // Tamanho da tabela hash 
         double fatorCarga = (double) N / size;
 
-        System.out.println("=== CONFIGURAÇÃO DO BENCHMARK ===");
+        System.out.println("CONFIGURAÇÃO DO BENCHMARK");
         System.out.println("N (Padrão): " + N);
         System.out.println("Tamanho da Tabela Hash (M): " + size);
         System.out.printf("Fator de Carga (lambda): %.4f\n", fatorCarga);
 
         System.out.println("\n=== GERANDO DADOS PRINCIPAIS ===");
-        // Dados para Hash e AVL (que suportam 100k)
+        // Dados para Hash e AVL (que suportam 100 mil)
         int[] aleatorio = gerarAleatorio(N);
         int[] ordenado = gerarOrdenado(N);
         int[] quase = gerarQuaseOrdenado(N);
 
    
-        //TESTES TABELA HASH
-      
-        
-        System.out.println("\n>>> INICIANDO TESTES: TABELAS HASH <<<");
 
-        // HASH CHAINING
-        System.out.println("\n=========== HASH CHAINING (Encadeamento Externo) ===========");
+        //TESTES TABELA HASH
+        System.out.println("\n INICIANDO TESTES: TABELAS HASH");
+
+        System.out.println("\n TabelaHashEncadeamento (Encadeamento Externo) ");
         testarHashChaining("Aleatório", aleatorio, size, N);
         testarHashChaining("Ordenado", ordenado, size, N);
         testarHashChaining("Quase Ordenado", quase, size, N);
 
         // HASH OPEN ADDRESSING
-        System.out.println("\n=========== HASH OPEN ADDRESSING (Sondagem Linear) ===========");
+        System.out.println("\n TabelaHashEnderecamentoAberto (Sondagem Linear)");
         testarHashOpen("Aleatório", aleatorio, size, N);
         testarHashOpen("Ordenado", ordenado, size, N);
         testarHashOpen("Quase Ordenado", quase, size, N);
 
       
         //TESTES ÁRVORES
-       
-        System.out.println("\n\n>>> INICIANDO TESTES: ÁRVORES <<<");
+        System.out.println("\n\n INICIANDO TESTES: ÁRVORES");
 
-        // ARVORE AVL
-        System.out.println("\n=========== ÁRVORE AVL (Balanceada) ===========");
-        // AVL é robusta, usa o N total (100.000)
+
+        System.out.println("\n ÁRVORE AVL (Balanceada) ");
+        // AVL robusta, usa o N total (100.000)
         testarAVL("Aleatório", aleatorio, N);
         testarAVL("Ordenado", ordenado, N);
         testarAVL("Quase Ordenado", quase, N);
 
         // ARVORE BINÁRIA DE BUSCA (ABB)
-        System.out.println("\n=========== ÁRVORE BINÁRIA DE BUSCA (Sem Balanceamento) ===========");
+        System.out.println("\n ÁRVORE BINÁRIA DE BUSCA (Sem Balanceamento)");
         
-        // CASO 1: Aleatório (Geralmente funciona com 100k pois a árvore fica equilibrada)
+        //(Geralmente funciona com 100k pois a árvore fica equilibrada)
         testarABB("Aleatório", aleatorio, N);
         
-        // CASO 2 e 3: Ordenados (Onde a ABB falha)
-        // Aqui fazemos a redução estratégica para conseguir medir o desempenho sem travar o Java
-        int nPequeno = 10000; // 10.000 elementos
+        //Onde a ABB falha
+        //  redução estratégica para conseguir medir o desempenho sem travar 
+        int nPequeno = 20000; // 
         
-        System.out.println("\n[AVISO CRÍTICO] Reduzindo N de " + N + " para " + nPequeno + " nos testes ordenados da ABB.");
-        System.out.println("Motivo: A ABB degenera em lista encadeada, causando estouro de pilha (StackOverflow) com N grande.");
+        System.out.println("\n[AVISO] foi reduzido N de " + N + " para " + nPequeno + " nos testes ordenados da ABB.");
+        System.out.println("Motivo: A ABB degenera em lista encadeada, causando estouro de pilha (StackOverflow) com o N grande.");
 
         // Geramos vetores menores apenas para este teste
         int[] ordenadoPeq = gerarOrdenado(nPequeno);
@@ -77,12 +71,11 @@ public class Main {
         testarABB("Ordenado (N Reduzido)", ordenadoPeq, nPequeno);
         testarABB("Quase Ordenado (N Reduzido)", quasePeq, nPequeno);
 
-        System.out.println("\n=== BENCHMARK CONCLUÍDO COM SUCESSO ===");
+        System.out.println("\n FIM - BENCHMARK CONCLUÍDO COM SUCESSO");
     }
 
  
-    //  GERADORES DE DADOS
-
+    //  GERADOR DE DADOS
     public static int[] gerarAleatorio(int n) {
         Random rand = new Random();
         int[] v = new int[n];
@@ -109,9 +102,8 @@ public class Main {
 
 
     //  MÉTODOS DE TESTE (HASH)
-  
     public static void testarHashChaining(String nome, int[] dados, int size, int N) {
-        HashChaining h = new HashChaining(size);
+        TabelaHashEncadeamento h = new TabelaHashEncadeamento(size);
         long inicio, fim;
 
         // Inserção
@@ -147,7 +139,7 @@ public class Main {
     }
 
     public static void testarHashOpen(String nome, int[] dados, int size, int N) {
-        HashOpenAddressing h = new HashOpenAddressing(size);
+        TabelaHashEnderecamentoAberto h = new TabelaHashEnderecamentoAberto(size);
         long inicio, fim;
 
         // Inserção
@@ -183,11 +175,9 @@ public class Main {
     }
 
   
-    //  MÉTODOS DE TESTE (ÁRVORES)
-    
-
+    //  ÁRVORES
     public static void testarAVL(String nome, int[] dados, int N) {
-        AVLTree avl = new AVLTree();
+        ArvoreAVL avl = new ArvoreAVL();
         long inicio, fim;
 
         // Inserção
@@ -224,7 +214,7 @@ public class Main {
     }
 
     public static void testarABB(String nome, int[] dados, int N) {
-        BinarySearchTree abb = new BinarySearchTree();
+        ArvoreBinariaBusca abb = new ArvoreBinariaBusca();
         long inicio, fim;
 
         // Inserção

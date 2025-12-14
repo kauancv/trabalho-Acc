@@ -1,13 +1,13 @@
 package TabelaHash;
 
-public class HashOpenAddressing {
+public class TabelaHashEnderecamentoAberto {
 
     private final Integer[] table;
     private final int size;
     public int collisions = 0;
     private final Integer DELETED = Integer.MIN_VALUE;
 
-    public HashOpenAddressing(int size) {
+    public TabelaHashEnderecamentoAberto(int size) {
         this.size = size;
         this.table = new Integer[size];
     }

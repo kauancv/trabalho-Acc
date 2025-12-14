@@ -1,10 +1,10 @@
 package TabelaHash;
 
-public class Node {
+public class No {
     int key;
-    Node next;
+    No next;
 
-    Node(int key) {
+    No(int key) {
         this.key = key;
         this.next = null;
     }

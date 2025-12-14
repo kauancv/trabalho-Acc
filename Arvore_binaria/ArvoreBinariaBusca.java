@@ -1,6 +1,6 @@
 package Arvore_binaria;
 
-public class BinarySearchTree {
+public class ArvoreBinariaBusca {
 
     // Classe interna para o Nó da árvore
     class Node {
@@ -16,18 +16,19 @@ public class BinarySearchTree {
     // Raiz da árvore
     protected Node root;
 
-    public BinarySearchTree() {
+    public ArvoreBinariaBusca() {
         root = null;
     }
 
   
-    //  OPERAÇÃO 1: INSERÇÃO
+    // INSERÇÃO
   
     public void insert(int key) {
         root = insertRec(root, key);
     }
 
     private Node insertRec(Node root, int key) {
+
         // Se a árvore estiver vazia ou chegar numa folha, cria o nó
         if (root == null) {
             root = new Node(key);
@@ -40,12 +41,11 @@ public class BinarySearchTree {
         else if (key > root.key)
             root.right = insertRec(root.right, key);
 
-        // Retorna o ponteiro do nó (inalterado)
         return root;
     }
 
  
-    //  OPERAÇÃO 2: BUSCA
+    //BUSCA
  
     public boolean search(int key) {
         return searchRec(root, key);
@@ -65,7 +65,7 @@ public class BinarySearchTree {
     }
 
 
-    //  OPERAÇÃO 3: REMOÇÃO
+    //REMOÇÃO
  
     public void remove(int key) {
         root = deleteRec(root, key);
@@ -80,14 +80,13 @@ public class BinarySearchTree {
         else if (key > root.key)
             root.right = deleteRec(root.right, key);
         else {
-            // Nó encontrado! removendo...
+           
             
-            // Caso 1: Nó com apenas um filho ou nenhum
+            // Nó com apenas um filho ou nenhum
             if (root.left == null) return root.right;
             else if (root.right == null) return root.left;
 
-            // Caso 2: Nó com dois filhos
-            // Pega o sucessor in-order (o menor da subárvore direita)
+            // Nó com dois filhos
             root.key = minValue(root.right);
 
             // Deleta o sucessor
@@ -106,7 +105,7 @@ public class BinarySearchTree {
     }
 
     
-    //  MÉTRICA: ALTURA DA ÁRVORE 
+    //ALTURA DA ÁRVORE 
 
     public int getHeight() {
         return height(root);
@@ -114,7 +113,7 @@ public class BinarySearchTree {
 
     // Calcula a altura recursivamente
     protected int height(Node node) {
-        if (node == null) return -1; // Altura de árvore vazia é -1 (convenção comum)
+        if (node == null) return 0;
         
         int leftHeight = height(node.left);
         int rightHeight = height(node.right);
