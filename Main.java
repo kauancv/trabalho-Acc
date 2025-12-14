@@ -10,7 +10,7 @@ public class Main {
        
        
         int N = 100000; // Carga de trabalho padrão (Hash e AVL aguentam bem)
-        int size = 200000; // Tamanho da tabela hash 
+        int size = 200003; // Tamanho da tabela hash 
         double fatorCarga = (double) N / size;
 
         System.out.println("CONFIGURAÇÃO DO BENCHMARK");
