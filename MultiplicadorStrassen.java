@@ -1,22 +1,19 @@
 public class MultiplicadorStrassen {
 
-    
     public static long contadorRecursao = 0;
 
-    // Método público que prepara a matriz (Padding) antes da recursão
-    public static int[][] multiplicar(int[][] A, int[][] B) {
-        contadorRecursao = 0; // Reseta contador
+    public static int[][] multiplicar(int[][] A, int[][] B){
+        contadorRecursao = 0; 
         
         int n = A.length;
         int m = UtilidadesMatriz.proximaPotencia2(n);
 
-        // Adiciona zeros se não for potência de 2
         int[][] A_pad = UtilidadesMatriz.adicionarPadding(A, m);
         int[][] B_pad = UtilidadesMatriz.adicionarPadding(B, m);
 
         int[][] C_pad = strassenRecursivo(A_pad, B_pad);
 
-        // Remove o padding para entregar o resultado no tamanho correto
+        
         return UtilidadesMatriz.removerPadding(C_pad, n);
     }
 
@@ -24,7 +21,6 @@ public class MultiplicadorStrassen {
         contadorRecursao++; 
         int n = A.length;
 
-        // Caso base: matriz 1x1 
         if (n == 1) {
             int[][] C = new int[1][1];
             C[0][0] = A[0][0] * B[0][0];
@@ -74,7 +70,7 @@ public class MultiplicadorStrassen {
         int[][] C21 = UtilidadesMatriz.somar(P3, P4);
         int[][] C22 = UtilidadesMatriz.somar(UtilidadesMatriz.subtrair(UtilidadesMatriz.somar(P5, P1), P3), P7);
 
-        // Monta a matriz final
+      
         int[][] C = new int[n][n];
         UtilidadesMatriz.juntar(C, C11, 0, 0);
         UtilidadesMatriz.juntar(C, C12, 0, metade);

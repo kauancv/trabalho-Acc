@@ -1,6 +1,5 @@
 public class MultiplicadorClassico {
-    //método tradicional com três laços (O(n^3)).
-
+    
     public static int[][] multiplicar(int[][] A, int[][] B) {
         int n = A.length;
         int[][] C = new int[n][n];
